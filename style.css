@@ -1,0 +1,39 @@
+.navbar {
+    font-size: 15px;
+    gap: 150px;
+    display: flex;
+    list-style-type: none;
+    padding-inline: 25px;
+    align-items: center;
+    background-color: #2f052b;
+    padding-bottom: 5px;
+    
+    padding-top: 5px;
+}
+
+
+@font-face {
+    font-family: MyFont;
+    src: url(Valorant\ Font.ttf);
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+
+a {
+    text-decoration: none;
+    color: white;
+    font-family: MyFont;
+
+}
+.background {
+    background-color: #250622;
+}
+.prxpic {
+    width: 100%;
+    display: block;
+    margin: auto;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0) 100%, rgba(0,0,0,1) 100%);
+}
+
