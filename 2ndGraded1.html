@@ -73,7 +73,7 @@
               <h1>
                   Sample Use of HTML Form    
               </h1>
-              <h3>by AL Mendoza </h3>
+              <h3>by BenedictSerra </h3>
           </div>
           <nav class="navbar">
               <a href="../../index.html"> Home </a>
@@ -82,7 +82,7 @@
       </header>
       <section>
         <h1 class="title">Sign-up Page</h1>
-        <form id="dForm"  action="submit" method="post"  onsubmit="return confirm('Are you sure you want to submit?');" onreset="return confirm('Are you sure you want to clear the information?');"> 
+        <form id="dForm"  method="post" action=""> 
           <fieldset>
             <legend>Club Signup Form</legend><br/>
             <label > Student Id: 
@@ -144,12 +144,11 @@
           </fieldset> 
 
           <fieldset>
-            <legend>Action Buttons</legend>
-            <button type="submit"> Accept </button>
-            <input type="reset" value=" Clear " />
+                <button type="submit">Submit</button>
+                <input type="reset" value="Clear" />
+                <button type="button" id="viewBtn">View Signups</button>
           </fieldset> 
         </form>
       </section>
-      <script src="q3e3script.js"></script>
     </body>
   </html>
