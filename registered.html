@@ -1,31 +1,265 @@
-<!DOCTYPE html>
-<html lang="en">
+!DOCTYPE html>
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Registered Signups</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Club Sign-up</title>
+  <style>
+  
+  body {
+    font-family: Arial;
+    padding: 20px;
+    background: gray;
+    color: #e6e6e6;
+  }
+
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #141821;
+    border: 1px solid #2a2f3a;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+  }
+
+  thead {
+    background: linear-gradient(90deg, #1b1f2a, #0a3cff);
+  }
+
+  th {
+    padding: 12px;
+    text-align: center;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #ffffff;
+    border-bottom: 1px solid #2a2f3a;
+  }
+
+  td {
+    padding: 10px 12px;
+    text-align: center;
+    border-bottom: 1px solid #232838;
+    color: #e6e6e6;
+  }
+
+  tbody tr {
+    background: #141821;
+    transition: 0.2s;
+  }
+
+  tbody tr:nth-child(even) {
+    background: #171c26;
+  }
+
+  tbody tr:hover {
+    background: #0a3cff2a; 
+    transform: scale(1.01);
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+    
+    fieldset {
+      margin-bottom: 20px;
+    }
+    #viewSection {
+      display: none;
+    }
+
+
+    
+  </style>
+
+  <script>
+    function RemoveColor(ele)
+    {
+    
+    if (ele.value.trim() == "")
+    {
+      console.log(ele);
+      ele.style.backgroundColor = "red";
+    }
+
+    else 
+    {
+      console.log(ele);
+      ele.style.backgroundColor = "white";
+    }
+
+    }
+
+    function ChangeColor(ele) 
+    {
+      console.log(ele)
+      ele.style.backgroundColor = "silver";
+    }
+
+  </script>
 
 
 </head>
+
 <body>
 
-  <h1>Club Signups</h1>
+<h1>Sign-up Page</h1>
 
-  <button onclick="history.back()">Back</button>
+<form id="signupForm">
+  <fieldset>
+    <legend>Your Credentials</legend>
+
+    Full Name:
+    <input type="text" id="fullname" onfocus="ChangeColor(this)" onblur="RemoveColor(this)" required><br><br>
+
+    Student ID:
+    <input type="number" id="studentId" onfocus="ChangeColor(this)" onblur="RemoveColor(this)" required><br><br>
+
+    Date of Birth:
+    <input type="date" id="dob" onfocus="ChangeColor(this)" onblur="RemoveColor(this)" required><br><br>
+
+    Email:
+    <input type="email" id="email" onfocus="ChangeColor(this)" onblur="RemoveColor(this)" required><br><br>
+  </fieldset>
+  <fieldset>
+    Phone Number:
+    <input type="text" id="phone" required onfocus="ChangeColor(this)" onblur="RemoveColor(this)"><br><br>
+
+    Grade Level:
+    <select id="grade" required>
+      <option value="">Choose</option>
+      <option>7</option>
+      <option>8</option>
+      <option>9</option>
+      <option>10</option>
+      <option>11</option>
+      <option>12</option>
+    </select><br><br>
+
+    Status:
+    <input type="radio" name="status" value="Intern" required> Intern
+    <input type="radio" name="status" value="Extern"> Extern<br><br>
+
+    Preferred Club:
+    <select id="club" required>
+      <option value="">Labuyo</option>
+      <option>Alianti</option>
+      <option>Flux</option>
+      <option>Mun</option>
+      <option>AKSIS</option>
+      <option>XYZ</option>
+    </select><br><br>
+
+    Reason:
+    <textarea id="reason" rows="3" required onfocus="ChangeColor(this)" onblur="RemoveColor(this)" ></textarea>
+  </fieldset>
+
+  <fieldset>
+    <legend>Actions</legend>
+    <button type="submit">Submit</button>
+    <button type="button" onclick="showSignups()">View Signups</button>
+    <input type="reset">
+  </fieldset>
+</form>
+
+<hr>
+
+<div id="viewSection">
+  <h2>View Sign-ups</h2>
+
+  Filter by Club:
+  <select id="filterClub">
+    <option value="All">All</option>
+    <option>Alianti</option>
+    <option>Flux</option>
+    <option>Mun</option>
+    <option>AKSIS</option>
+    <option>XYZ</option>
+  </select>
+
+  <p id="total"></p>
 
   <table>
     <thead>
       <tr>
-        <th>Student ID</th>
-        <th>Full Name</th>
-        <th>Email</th>
+        <th>Name</th>
+        <th>ID</th>
         <th>Grade</th>
-        <th>Stay</th>
-        <th>Club</th>
+        <th>Clubd</th>
+        <th>Status</th>
       </tr>
     </thead>
-    <tbody id="signupTable"></tbody>
+    <tbody id="tableBody"></tbody>
   </table>
+</div>
+
+<script>
+  let form = document.getElementById("signupForm");
+  let viewSection = document.getElementById("viewSection");
+  let tableBody = document.getElementById("tableBody");
+  let filterClub = document.getElementById("clubFilter");
+  let total = document.getElementById("total");
+
+  function getSignups() {
+    return JSON.parse(localStorage.getItem("signups")) || [];
+  }
+
+  function saveSignups(data) {
+    localStorage.setItem("signups", JSON.stringify(data));
+  }
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let signups = getSignups();
+
+    let user = {
+      name: fullname.value,
+      id: studentId.value,
+      grade: grade.value,
+      club: club.value,
+      status: document.querySelector("input[name='status']:checked").value
+    };
+
+    signups.push(user);
+    saveSignups(signups);
+
+    alert("Signup saved!");
+    form.reset();
+  });
+
+  function showSignups() {
+    viewSection.style.display = "block";
+    displayTable(getSignups());
+  }
+
+  function displayTable(data) {
+    tableBody.innerHTML = "";
+    data.forEach(s => {
+      tableBody.innerHTML += `
+        <tr>
+          <td>${s.name}</td>
+          <td>${s.id}</td>
+          <td>${s.grade}</td>
+          <td>${s.club}</td>
+          <td>${s.status}</td>
+        </tr>
+      `;
+    });
+    total.textContent = "Total Sign-ups: " + data.length;
+  }
+
+  filterClub.addEventListener("change", function() {
+    let signups = getSignups();
+    if (this.value === "All") {
+      displayTable(signups);
+    } else {
+      displayTable(signups.filter(s => s.club === this.value));
+    }
+  });
+</script>
 
 </body>
 </html>
