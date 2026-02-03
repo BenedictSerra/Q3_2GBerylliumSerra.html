@@ -80,14 +80,14 @@
     
     if (ele.value.trim() == "")
     {
-      console.log(ele);
-      ele.style.backgroundColor = "red";
+      console.log(ele);       
+      ele.style.backgroundColor = "red"; // If tehre is no text it becomes red
     }
 
     else 
     {
       console.log(ele);
-      ele.style.backgroundColor = "white";
+      ele.style.backgroundColor = "white";    // else
     }
 
     }
@@ -95,7 +95,7 @@
     function ChangeColor(ele) 
     {
       console.log(ele)
-      ele.style.backgroundColor = "silver";
+      ele.style.backgroundColor = "silver"; /// if there they hover it becomes silver
     }
 
   </script>
@@ -216,14 +216,14 @@
     let signups = getSignups();
 
     let user = {
-      name: fullname.value,
+      name: fullname.value,           /// saving tthe object
       id: studentId.value,
       grade: grade.value,
       club: club.value,
       status: document.querySelector("input[name='status']:checked").value
     };
 
-    signups.push(user);
+    signups.push(user);  // sving it in array
     saveSignups(signups);
 
     alert("Signup saved!");
@@ -237,11 +237,11 @@
 
   function displayTable(data) {
     tableBody.innerHTML = "";
-    data.forEach(s => {
+    data.forEach(s => { // the display table
       tableBody.innerHTML += `
         <tr>
           <td>${s.name}</td>
-          <td>${s.id}</td>
+          <td>${s.id}</td>     
           <td>${s.grade}</td>
           <td>${s.club}</td>
           <td>${s.status}</td>
